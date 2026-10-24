@@ -11,7 +11,7 @@ st.markdown(f"""
     <style>
     /* 全域背景圖片與深色遮罩 */
     .stApp {{
-        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                     url('{background_image_url}');
         background-size: cover;
         background-position: center;
@@ -56,35 +56,36 @@ st.markdown(f"""
         color: #1a1a1a !important;
     }}
 
-    /* 頂部真人形象圖樣式：放大、無邊框、3D立體浮動 */
+    /* 頂部真人形象圖樣式：超大尺寸、無邊框、3D立體浮動陰影 */
     .header-avatars {{
         display: flex;
         align-items: center;
-        gap: 16px;
-        margin-bottom: 15px;
+        gap: 18px;
+        margin-bottom: 18px;
         flex-wrap: wrap;
     }}
     .avatar-img {{
-        width: 110px;
-        height: 110px;
-        border-radius: 16px;
+        width: 130px;
+        height: 130px;
+        border-radius: 20px;
         object-fit: cover;
         border: none !important;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+        outline: none !important;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
     }}
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頁面標題與熟齡男女真人專業照 (50-60歲成熟穩重亞洲面孔)
-avatar_male = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
-avatar_female = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop"
+# 3. 頁面標題與 50-60 歲熟齡亞洲/馬來西亞在地職人專業照
+avatar_male = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
+avatar_female = "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
 
 st.markdown(f"""
     <div class="header-avatars">
         <img src="{avatar_male}" class="avatar-img" alt="資深男職人">
         <img src="{avatar_female}" class="avatar-img" alt="資深女職人">
         <div>
-            <h1 style="margin: 0; padding: 0; font-size: 2rem !important;">經驗傳承<br>經驗人才求職通</h1>
+            <h1 style="margin: 0; padding: 0; font-size: 2.1rem !important; line-height: 1.2;">經驗傳承<br>經驗人才求職通</h1>
         </div>
     </div>
 """, unsafe_allow_html=True)
