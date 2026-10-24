@@ -75,8 +75,8 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # 3. 頁面標題與真人形象圖 (40-60歲男女職人照片)
-avatar_male = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop" # 熟齡男性專業形象
-avatar_female = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop" # 熟齡女性專業形象
+avatar_male = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300&auto=format&fit=crop"
+avatar_female = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop"
 
 st.markdown(f"""
     <div class="header-avatars">
@@ -108,9 +108,26 @@ with col2:
 if user_exp:
     st.markdown("### 🎴 您的經驗卡預覽：")
     
-    card_html = f"""
-    <div class="experience-card">
-        <h4>📋 個人求職摘要</h4>
-        <p><b>📍 工作地區：</b>{location}</p>
-        <p><b>💰 期望薪資：</b>RM {expected_pay if expected_pay else '面議'}</p>
-        <p><b>💪 工作經驗與
+    pay_text = expected_pay if expected_pay else '面議'
+    card_html = (
+        '<div class="experience-card">'
+        '<h4>📋 個人求職摘要</h4>'
+        f'<p><b>📍 工作地區：</b>{location}</p>'
+        f'<p><b>💰 期望薪資：</b>RM {pay_text}</p>'
+        f'<p><b>💪 工作經驗與專長：</b><br>{user_exp}</p>'
+        '</div>'
+    )
+    st.markdown(card_html, unsafe_allow_html=True)
+
+    # 構造 WhatsApp 傳送文字
+    msg = f"你好！我想應徵/了解工作。這是我的個人經驗卡：\n\n📍 地區：{location}\n💰 期望薪資：RM {pay_text}\n📝 經驗：{user_exp}"
+    encoded_msg = urllib.parse.quote(msg)
+    
+    contact_phone = "60123456789"
+    whatsapp_url = f"https://wa.me/{contact_phone}?text={encoded_msg}"
+
+    st.markdown("### 📲 2. 一鍵傳送給老闆/媒合人員：")
+    st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; height:3.5em; font-size:20px; font-weight:bold; background-color:#25D366; color:white; border-radius:12px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">💬 透過 WhatsApp 一鍵發送經驗卡</button></a>', unsafe_allow_html=True)
+
+st.write("---")
+st.caption("© 專為熟齡與在地求職者打造的高效求職平台")
