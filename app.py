@@ -11,7 +11,7 @@ st.markdown(f"""
     <style>
     /* 全域背景圖片與深色遮罩 */
     .stApp {{
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
                     url('{background_image_url}');
         background-size: cover;
         background-position: center;
@@ -56,56 +56,55 @@ st.markdown(f"""
         color: #1a1a1a !important;
     }}
 
-    /* 頂部真人形象區塊：放大、無圓框、矩形質感 */
-    .hero-container {{
+    /* 放大、無邊框的亞洲熟齡男女照片樣式 */
+    .header-container {{
         display: flex;
+        align-items: center;
         gap: 15px;
-        margin-bottom: 20px;
-        justify-content: center;
+        margin-bottom: 15px;
     }}
-    .hero-img {{
-        width: 45%;
-        max-height: 180px;
-        object-fit: cover;
+    .avatar-img {{
+        width: 90px;
+        height: 90px;
         border-radius: 10px;
-        border: 2px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+        object-fit: cover;
+        border: none !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }}
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頂部放大、無圓框的 40-50歲資深職人真實照片
-mature_man_img = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
-mature_woman_img = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop"
+# 3. 頁面標題與放大、無邊框的亞洲熟齡男女真人照片
+avatar_asian_male = "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop"
+avatar_asian_female = "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop"
 
 st.markdown(f"""
-    <div class="hero-container">
-        <img src="{mature_man_img}" class="hero-img" alt="資深男職人">
-        <img src="{mature_woman_img}" class="hero-img" alt="資深女職人">
+    <div class="header-container">
+        <img src="{avatar_asian_male}" class="avatar-img" alt="熟齡男職人">
+        <img src="{avatar_asian_female}" class="avatar-img" alt="熟齡女職人">
     </div>
 """, unsafe_allow_html=True)
 
-# 4. 頁面標題與簡介
 st.title("👨‍🔧 經驗傳承 · 經驗人才求職通")
 st.subheader("不用寫英文履歷，用最簡單的方式找好工作！")
 
 st.write("---")
 
-# 5. 步驟 1：輸入個人經驗
+# 4. 步驟 1：輸入個人經驗
 st.markdown("### 📄 1. 建立您的個人經驗卡")
 st.write("請輸入或用手機語音輸入您的工作經驗：")
 
 default_text = "例如：我今年 52 歲，在新山做過 15 年羅里司機與車隊調度，熟悉新加坡與新山路線，想找穩定的車隊主管或駕駛工作..."
 user_exp = st.text_area("工作經驗與專長", value="", placeholder=default_text, height=150)
 
-# 6. 選擇期望薪資與地區
+# 5. 選擇期望薪資與地區
 col1, col2 = st.columns(2)
 with col1:
     location = st.selectbox("希望工作地區", ["新山 (Johor Bahru)", "巴西古當 (Pasir Gudang)", "笨珍 (Pontian)", "古來 (Kulai)", "其他"])
 with col2:
     expected_pay = st.text_input("期望薪資 (月薪 RM)", placeholder="例如：3500 - 4500")
 
-# 7. 生成經驗卡與一鍵 WhatsApp 聯絡
+# 6. 生成經驗卡與一鍵 WhatsApp 聯絡
 if user_exp:
     st.markdown("### 🎴 您的經驗卡預覽：")
     
