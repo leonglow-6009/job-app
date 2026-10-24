@@ -60,23 +60,23 @@ st.markdown(f"""
     .header-container {{
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 18px;
         margin-bottom: 15px;
     }}
     .avatar-img {{
-        width: 90px;
-        height: 90px;
-        border-radius: 10px;
+        width: 110px;
+        height: 110px;
+        border-radius: 12px;
         object-fit: cover;
         border: none !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
     }}
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頁面標題與放大、無邊框的亞洲熟齡男女真人照片
-avatar_asian_male = "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop"
-avatar_asian_female = "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop"
+# 3. 頁面標題與放大、無邊框的亞洲熟齡男女真人照片（更具經驗與成熟感）
+avatar_asian_male = "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=400&auto=format&fit=crop"
+avatar_asian_female = "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
 
 st.markdown(f"""
     <div class="header-container">
