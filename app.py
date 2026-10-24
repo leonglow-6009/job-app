@@ -56,36 +56,39 @@ st.markdown(f"""
         color: #1a1a1a !important;
     }}
 
-    /* 放大、無邊框的亞洲熟齡男女照片樣式 */
-    .header-container {{
+    /* 頂部真人形象圖樣式：放大、無邊框、3D立體浮動 */
+    .header-avatars {{
         display: flex;
         align-items: center;
-        gap: 18px;
+        gap: 16px;
         margin-bottom: 15px;
+        flex-wrap: wrap;
     }}
     .avatar-img {{
         width: 110px;
         height: 110px;
-        border-radius: 12px;
+        border-radius: 16px;
         object-fit: cover;
         border: none !important;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
     }}
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頁面標題與放大、無邊框的亞洲熟齡男女真人照片（更具經驗與成熟感）
-avatar_asian_male = "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=400&auto=format&fit=crop"
-avatar_asian_female = "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
+# 3. 頁面標題與熟齡男女真人專業照 (50-60歲成熟穩重亞洲面孔)
+avatar_male = "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
+avatar_female = "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400&auto=format&fit=crop"
 
 st.markdown(f"""
-    <div class="header-container">
-        <img src="{avatar_asian_male}" class="avatar-img" alt="熟齡男職人">
-        <img src="{avatar_asian_female}" class="avatar-img" alt="熟齡女職人">
+    <div class="header-avatars">
+        <img src="{avatar_male}" class="avatar-img" alt="資深男職人">
+        <img src="{avatar_female}" class="avatar-img" alt="資深女職人">
+        <div>
+            <h1 style="margin: 0; padding: 0; font-size: 2rem !important;">經驗傳承<br>經驗人才求職通</h1>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
-st.title("👨‍🔧 經驗傳承 · 經驗人才求職通")
 st.subheader("不用寫英文履歷，用最簡單的方式找好工作！")
 
 st.write("---")
