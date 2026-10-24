@@ -4,56 +4,56 @@ import urllib.parse
 # 1. 設定頁面標題與佈局
 st.set_page_config(page_title="資深人才職通 - 熟齡求職專區", layout="centered", page_icon="💼")
 
-# 2. 設定背景圖片與大字體 CSS 樣式
-# 使用半透明遮罩 (rgba) 確保背景圖不干擾文字閱讀
+# 2. 設定背景圖片與深色高對比 CSS 樣式
 background_image_url = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop"
 
 st.markdown(f"""
     <style>
-    /* 全域背景圖片與遮罩 */
+    /* 全域背景圖片與深色遮罩，讓文字超清晰 */
     .stApp {{
-        background: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), 
+        background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
                     url('{background_image_url}');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
     }}
 
-    /* 調整字體大小與行距，適合中高齡閱讀 */
+    /* 全域字體大小與白色文字設定 */
     html, body, [class*="css"] {{
         font-size: 19px !important;
-        color: #1a1a1a;
+        color: #ffffff !important;
     }}
 
-    /* 主標題樣式 */
-    h1 {{
-        color: #1A365D;
-        font-size: 2.2rem !important;
-        font-weight: bold;
+    /* 主標題顏色 */
+    h1, h2, h3, h4, p, label {{
+        color: #ffffff !important;
     }}
 
-    /* 按鈕大字體與高對比色 */
-    .stButton>button {{
-        width: 100%;
-        height: 3.5em;
-        font-size: 20px !important;
-        font-weight: bold;
-        background-color: #25D366;
-        color: white;
-        border-radius: 12px;
-        border: none;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /* 輸入框文字與背景設為清晰可讀 */
+    .stTextInput>div>div>input, .stTextArea>div>div>textarea {{
+        background-color: rgba(255, 255, 255, 0.95) !important;
+        color: #000000 !important;
+        font-size: 18px !important;
+        border-radius: 8px;
+    }}
+    
+    /* 下拉選單文字 */
+    .stSelectbox div[data-baseweb="select"] {{
+        color: #000000 !important;
     }}
 
-    /* 經驗卡預覽框樣式 */
+    /* 經驗卡預覽框樣式（維持白底黑字，對比強烈） */
     .experience-card {{
-        background-color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.95);
         padding: 20px;
         border-radius: 12px;
-        border-left: 6px solid #250366;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        border-left: 6px solid #25D366;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         margin-top: 15px;
         margin-bottom: 20px;
+    }}
+    .experience-card *, .experience-card h4, .experience-card p {{
+        color: #1a1a1a !important;
     }}
     </style>
 """, unsafe_allow_html=True)
@@ -96,12 +96,11 @@ if user_exp:
     msg = f"你好！我想應徵/了解工作。這是我的個人經驗卡：\n\n📍 地區：{location}\n💰 期望薪資：RM {expected_pay if expected_pay else '面議'}\n📝 經驗：{user_exp}"
     encoded_msg = urllib.parse.quote(msg)
     
-    # 請將下方電話號碼改為您要接收對接訊息的 WhatsApp 號碼（格式：國家碼+號碼，如 60123456789）
     contact_phone = "60123456789"
     whatsapp_url = f"https://wa.me/{contact_phone}?text={encoded_msg}"
 
     st.markdown("### 📲 2. 一鍵傳送給老闆/媒合人員：")
-    st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; height:3.5em; font-size:20px; font-weight:bold; background-color:#25D366; color:white; border-radius:12px; border:none; cursor:pointer;">💬 透過 WhatsApp 一鍵發送經驗卡</button></a>', unsafe_allow_html=True)
+    st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; height:3.5em; font-size:20px; font-weight:bold; background-color:#25D366; color:white; border-radius:12px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">💬 透過 WhatsApp 一鍵發送經驗卡</button></a>', unsafe_allow_html=True)
 
 st.write("---")
 st.caption("© 專為熟齡與在地求職者打造的高效求職平台")
