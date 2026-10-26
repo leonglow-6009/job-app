@@ -4,12 +4,11 @@ import urllib.parse
 # 1. 設定頁面標題與佈局
 st.set_page_config(page_title="資深人才職通 - 熟齡求職專區", layout="centered", page_icon="💼")
 
-# 2. 設定背景圖片與深色高對比 CSS 樣式
+# 2. 背景圖片與 CSS 樣式
 background_image_url = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop"
 
 st.markdown(f"""
     <style>
-    /* 全域背景圖片與深色遮罩 */
     .stApp {{
         background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), 
                     url('{background_image_url}');
@@ -18,18 +17,15 @@ st.markdown(f"""
         background-attachment: fixed;
     }}
 
-    /* 全域字體大小與白色文字設定 */
     html, body, [class*="css"] {{
         font-size: 19px !important;
         color: #ffffff !important;
     }}
 
-    /* 主標題顏色 */
     h1, h2, h3, h4, p, label {{
         color: #ffffff !important;
     }}
 
-    /* 輸入框文字與背景設為清晰可讀 */
     .stTextInput>div>div>input, .stTextArea>div>div>textarea {{
         background-color: rgba(255, 255, 255, 0.95) !important;
         color: #000000 !important;
@@ -37,13 +33,11 @@ st.markdown(f"""
         border-radius: 8px;
     }}
     
-    /* 下拉選單文字 */
     .stSelectbox div[data-baseweb="select"] {{
         color: #000000 !important;
     }}
 
-    /* 卡片預覽框與職缺卡片樣式 */
-    .experience-card, .job-card {{
+    .job-card, .experience-card {{
         background-color: rgba(255, 255, 255, 0.95);
         padding: 20px;
         border-radius: 12px;
@@ -52,25 +46,23 @@ st.markdown(f"""
         margin-top: 15px;
         margin-bottom: 15px;
     }}
-    .experience-card *, .experience-card h4, .experience-card p,
-    .job-card *, .job-card h4, .job-card p {{
+    .job-card *, .job-card h4, .job-card p,
+    .experience-card *, .experience-card h4, .experience-card p {{
         color: #1a1a1a !important;
     }}
 
-    /* 解鎖付款提示框 */
     .unlock-box {{
         background-color: #FFF9E6;
         border: 2px dashed #E6A23C;
         padding: 18px;
         border-radius: 12px;
         margin-top: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }}
     .unlock-box p, .unlock-box h4 {{
         color: #8A6D3B !important;
     }}
 
-    /* 頂部真人形象圖樣式 */
     .header-avatars {{
         display: flex;
         align-items: center;
@@ -90,7 +82,7 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頁面標題與熟齡職人照片
+# 3. 頁面標頭與 3D 浮動熟齡職人照
 avatar_male = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
 avatar_female = "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
 
@@ -110,15 +102,13 @@ st.write("---")
 
 tab1, tab2 = st.tabs(["🔥 JB 熱門職缺專區", "📄 我要發布求職卡"])
 
-# ----------------- 分頁 1：RM 1 解鎖職缺專區 -----------------
+admin_phone = "60123456789"  # 您的 WhatsApp 號碼
+
+# ----------------- 分頁 1：職缺專區 -----------------
 with tab1:
     st.markdown("### 🏢 新山在地嚴選職缺（RM 1 微型解鎖）")
     st.write("精選真心徵人的在地企業，只需 **RM 1** 即可獲取老闆直接 WhatsApp 號碼：")
 
-    # 管理員電話（接收支付憑證）
-    admin_phone = "60123456789"  # 請換成您的收憑證 WhatsApp 號碼
-
-    # 職缺列表
     jb_jobs = [
         {
             "id": "job1",
@@ -154,6 +144,9 @@ with tab1:
         }
     ]
 
+    # 直接穩定的 DuitNow QR 圖片連結
+    qr_img_url = "https://i.imgur.com/39316uB.png"  # 或 GitHub 原始圖片完整連結
+
     for job in jb_jobs:
         st.markdown(f"""
             <div class="job-card">
@@ -166,7 +159,6 @@ with tab1:
             </div>
         """, unsafe_allow_html=True)
 
-        # 展開解鎖區塊
         with st.expander(f"🔓 點擊此處支付 RM 1 解鎖【{job['title']}】的聯絡電話"):
             st.markdown(f"""
                 <div class="unlock-box">
@@ -176,11 +168,9 @@ with tab1:
                 </div>
             """, unsafe_allow_html=True)
 
-            # 展示上傳的 DuitNow QR 照片
-            qr_code_url = "https://raw.githubusercontent.com/leonglow-6009/job-app/main/qr.png"  # 或使用直接連結
-            st.image(qr_code_url, caption="DuitNow / Touch 'n Go RM 1 轉賬碼 (U BREAD)", width=260)
+            # 使用 Streamlit 內建 st.image 以保證 100% 成功加載
+            st.image("https://raw.githubusercontent.com/leonglow-6009/job-app/main/1000086716.png", caption="DuitNow / Touch 'n Go RM 1 轉賬碼 (U BREAD)", width=280)
 
-            # WhatsApp 傳送轉賬憑證按鈕
             receipt_msg = f"你好！我已轉賬 RM 1 解鎖職缺：【{job['title']}】，這是我的轉賬截圖，請發給我老闆的聯絡電話，謝謝！"
             encoded_receipt_msg = urllib.parse.quote(receipt_msg)
             receipt_url = f"https://wa.me/{admin_phone}?text={encoded_receipt_msg}"
