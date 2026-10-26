@@ -1,10 +1,12 @@
 import streamlit as st
 import urllib.parse
+import base64
+import os
 
 # 1. 設定頁面標題與佈局
 st.set_page_config(page_title="資深人才職通 - 熟齡求職專區", layout="centered", page_icon="💼")
 
-# 2. 背景圖片與 CSS 樣式
+# 2. 全域背景圖片與 CSS 樣式
 background_image_url = "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1600&auto=format&fit=crop"
 
 st.markdown(f"""
@@ -82,7 +84,7 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 頁面標頭與 3D 浮動熟齡職人照
+# 3. 頁面標頭與熟齡職人無邊框 3D 浮動照
 avatar_male = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
 avatar_female = "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
 
@@ -103,6 +105,28 @@ st.write("---")
 tab1, tab2 = st.tabs(["🔥 JB 熱門職缺專區", "📄 我要發布求職卡"])
 
 admin_phone = "60123456789"  # 您的 WhatsApp 號碼
+
+# ----------------- 顯示 Base64 圖片的輔助函式 -----------------
+def render_qr_code():
+    # 自動尋找可能的檔名（支援大小寫與不同副檔名）
+    possible_names = ["1000086716.png", "1000086716.PNG", "1000086716.jpg", "1000086716.JPG", "qr.png"]
+    found_file = None
+    for name in possible_names:
+        if os.path.exists(name):
+            found_file = name
+            break
+            
+    if found_file:
+        with open(found_file, "rb") as img_file:
+            encoded_string = base64.b64encode(img_file.read()).decode()
+        st.markdown(f'''
+            <div style="text-align: center; margin: 15px 0;">
+                <img src="data:image/png;base64,{encoded_string}" style="width: 260px; max-width: 80%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" alt="DuitNow QR">
+                <p style="color: #8A6D3B; font-size: 15px; margin-top: 8px;">DuitNow / Touch 'n Go RM 1 轉賬碼 (U BREAD)</p>
+            </div>
+        ''', unsafe_allow_html=True)
+    else:
+        st.error("⚠️ 找不到 QR Code 圖片檔案！請確認 GitHub 根目錄是否有上傳圖片，且檔名正確。")
 
 # ----------------- 分頁 1：職缺專區 -----------------
 with tab1:
@@ -144,9 +168,6 @@ with tab1:
         }
     ]
 
-    # 直接穩定的 DuitNow QR 圖片連結
-    qr_img_url = "https://i.imgur.com/39316uB.png"  # 或 GitHub 原始圖片完整連結
-
     for job in jb_jobs:
         st.markdown(f"""
             <div class="job-card">
@@ -168,8 +189,8 @@ with tab1:
                 </div>
             """, unsafe_allow_html=True)
 
-            # 使用 Streamlit 內建 st.image 以保證 100% 成功加載
-            st.image("https://raw.githubusercontent.com/leonglow-6009/job-app/main/1000086716.png", caption="DuitNow / Touch 'n Go RM 1 轉賬碼 (U BREAD)", width=280)
+            # 呼叫 Base64 圖片渲染函式
+            render_qr_code()
 
             receipt_msg = f"你好！我已轉賬 RM 1 解鎖職缺：【{job['title']}】，這是我的轉賬截圖，請發給我老闆的聯絡電話，謝謝！"
             encoded_receipt_msg = urllib.parse.quote(receipt_msg)
@@ -181,38 +202,4 @@ with tab1:
 
 # ----------------- 分頁 2：建立個人求職卡 -----------------
 with tab2:
-    st.markdown("### 📄 建立您的專屬經驗卡")
-    st.write("如果您找不到合適的工作，可以自己填寫專長，免費發布經驗卡：")
-
-    default_text = "例如：我今年 52 歲，在新山做過 15 年羅里司機與車隊調度，熟悉新加坡與新山路線，想找穩定的車隊主管或駕駛工作..."
-    user_exp = st.text_area("請輸入您的工作經驗與專長", value="", placeholder=default_text, height=150)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        location = st.selectbox("希望工作地區", ["新山 (Johor Bahru)", "巴西古當 (Pasir Gudang)", "古來 (Kulai)", "柔佛再也 (Johor Jaya)", "其他"])
-    with col2:
-        expected_pay = st.text_input("期望薪資 (月薪 RM)", placeholder="例如：3500 - 4500")
-
-    if user_exp:
-        st.markdown("### 🎴 您的經驗卡預覽：")
-        
-        pay_text = expected_pay if expected_pay else '面議'
-        card_html = (
-            '<div class="experience-card">'
-            '<h4>📋 個人求職摘要</h4>'
-            f'<p><b>📍 工作地區：</b>{location}</p>'
-            f'<p><b>💰 期望薪資：</b>RM {pay_text}</p>'
-            f'<p><b>💪 工作經驗與專長：</b><br>{user_exp}</p>'
-            '</div>'
-        )
-        st.markdown(card_html, unsafe_allow_html=True)
-
-        msg = f"你好！我想應徵/找工作。這是我的個人經驗卡：\n\n📍 地區：{location}\n💰 期望薪資：RM {pay_text}\n📝 經驗：{user_exp}"
-        encoded_msg = urllib.parse.quote(msg)
-        whatsapp_url = f"https://wa.me/{admin_phone}?text={encoded_msg}"
-
-        st.markdown("### 📲 一鍵發送給媒合人員：")
-        st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; height:3.5em; font-size:20px; font-weight:bold; background-color:#25D366; color:white; border-radius:12px; border:none; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">💬 透過 WhatsApp 免費發送我的經驗卡</button></a>', unsafe_allow_html=True)
-
-st.write("---")
-st.caption("© 專為 40-60 歲熟齡與在地求職者打造的高效求職平台")
+    st.markdown("###
